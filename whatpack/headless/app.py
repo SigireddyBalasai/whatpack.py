@@ -1,7 +1,7 @@
 """This is the flask module we will write get the request and send the response"""
 
-from flask import Flask, request, current_app,send_file
-from whats import WhatsApp
+from flask import Flask, request, current_app, send_file
+from .whats import WhatsApp
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def hello_world():
 def send_message_to_number():
     """This is the method to send message to a number"""
     print(request.args)
-    phone=request.args.get('phone')
+    phone = request.args.get('phone')
     current_app.config['ok'].send_user_message(phone, request.args.get('message'))
     return 'done'
 
@@ -31,17 +31,17 @@ def send_user_image():
 @app.route("/send_user_document")
 def send_user_document():
     """THid will send a document to the user"""
-    filename=request.args.get('filename')
+    filename = request.args.get('filename')
     phone = request.args.get('phone')
-    current_app.config['ok'].send_document(phone,filename=filename)
+    current_app.config['ok'].send_document(phone, filename=filename)
     return 'done'
+
 
 @app.route("/login")
 def send_login_image():
     """"Login to whatsapp web by scanning the QR code Send the image to the user"""
     app.config['ok'] = WhatsApp()
     return send_file('hello.png')
-
 
 
 def create_app():

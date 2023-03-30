@@ -22,7 +22,7 @@ def reqs():
 
 setup(
     name="whatpack.py",
-    packages=['whatpack', 'whatpack.Async', 'whatpack.Async.core', 'whatpack.Headless'],
+    packages=['whatpack', 'whatpack.async', 'whatpack.async.core', 'whatpack.headless'],
     version="2.2.5",
     maintainer="SigireddyBalasai",
     maintainer_email="SigireddyBalasai@gmail.com",
@@ -38,7 +38,7 @@ setup(
     author_email="sigireddybalasai@gmail.com",
     url="https://github.com/SigireddyBalasai/whatpack.py",
     download_url="https://github.com/SigireddyBalasai/whatpack.py/archive/refs/tags/1.0.tar.gz",
-    keywords=["sendwhatmsg", "whatpack"],
+    keywords=["send_what_msg", "whatpack"],
     install_requires=reqs(),
     include_package_data=True,
     long_description=readme_str(),

@@ -1,2 +1,9 @@
 flask
 selenium
+pyperclip
+pyautogui
+aiohttp
+pyscreeze
+opencv-python
+numpy
+keyboard

@@ -8,8 +8,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
-    <option name="removeUnused" value="true" />
+    <option name="requirementsPath" value="C:\Users\sigir\PycharmProjects\whatpack.py\requirements.txt" />
     <option name="modifyBaseFiles" value="true" />
+    <option name="keepMatchingSpecifier" value="false" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

@@ -14,7 +14,7 @@ import pyautogui as pg
 from .core import core_, exceptions
 
 
-def sendwhatmsg_instantly(
+def send_what_msg_instantly(
         phone_no: str,
         message: str,
         **kwargs
@@ -41,8 +41,8 @@ def sendwhatmsg_instantly(
         'close_time': kwargs.get('close_time', 3)
     }
     print(phone_no)
-    print(await core_.check_number(number=phone_no))
-    if not await core_.check_number(number=phone_no):
+    print(core_.check_number(number=phone_no))
+    if not core_.check_number(number=phone_no):
         raise exceptions.CountryCodeException("Country Code Missing in Phone Number!")
     phone_no = phone_no.replace(" ", "")
     print(phone_no)
@@ -50,14 +50,14 @@ def sendwhatmsg_instantly(
         raise exceptions.InvalidPhoneNumber("Invalid Phone Number.")
     phone_no = phone_no.replace(" ", "")
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}&text={quote(message)}", new=0)
-    await asyncio.sleep(waiting_['wait_time'])
+    asyncio.sleep(waiting_['wait_time'])
     pg.press('enter')
-    await asyncio.sleep(waiting_['close_time'])
+    asyncio.sleep(waiting_['close_time'])
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_['close_time'])
+        core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def sendwhatmsg(
+def send_whats_msg(
         phone_no: typing.Union[str, None] = None,
         message: typing.Union[str, None] = None,
         **kwargs
@@ -111,13 +111,13 @@ def sendwhatmsg(
         f"In {waiting_['sleep_time']} Seconds WhatsApp will open and after\
         {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
-    await asyncio.sleep(sleep_time)
-    await sendwhatmsg_instantly(phone_no, message, **kwargs)
+    asyncio.sleep(sleep_time)
+    send_what_msg_instantly(phone_no, message, **kwargs)
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_['close_time'])
+        core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def sendwhatmsg_to_group(
+def send_whats_msg_to_group(
         group_id: str,
         message: str,
         **kwargs
@@ -167,13 +167,13 @@ def sendwhatmsg_to_group(
         f"In {sleep_time} Seconds WhatsApp will open\
             and after {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
-    await asyncio.sleep(sleep_time)
-    await sendwhatmsg_instantly(group_id, message)
+    asyncio.sleep(sleep_time)
+    send_what_msg_instantly(group_id, message)
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_["close_time"])
+        core_.close_tab(wait_time=waiting_["close_time"])
 
 
-def sendwhatmsg_to_group_instantly(
+def send_what_msg_to_group_instantly(
         group_id: str,
         message: str,
         **kwargs
@@ -198,14 +198,14 @@ def sendwhatmsg_to_group_instantly(
         'tab_close': kwargs.get('tab_close', False),
         'close_time': kwargs.get('close_time', 3)
     }
-    await asyncio.sleep(4)
-    await sendwhatmsg_instantly(group_id, message, **kwargs)
+    asyncio.sleep(4)
+    send_what_msg_instantly(group_id, message, **kwargs)
 
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_['close_time'])
+        core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def sendwhatsmsg_to_all(
+def send_whats_msg_to_all(
         phone_nos: List[str],
         message: str,
         **kwargs
@@ -229,12 +229,12 @@ def sendwhatsmsg_to_all(
     """
 
     for phone_n in phone_nos:
-        await sendwhatmsg(
+        send_whats_msg(
             phone_n, message, **kwargs
         )
 
 
-def sendimg_or_video_immediately(
+def send_img_or_video_immediately(
         phone_no: str,
         path: str,
         message: str = None,
@@ -259,7 +259,7 @@ def sendimg_or_video_immediately(
         'tab_close': kwargs.get('tab_close', False),
         'close_time': kwargs.get('close_time', 3)
     }
-    if not await core_.check_number(number=phone_no):
+    if not core_.check_number(number=phone_no):
         raise exceptions.CountryCodeException("Country Code Missing in Phone Number!")
 
     phone_no = phone_no.replace(" ", "")
@@ -268,21 +268,17 @@ def sendimg_or_video_immediately(
 
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}")
     time.sleep(waiting_['wait_time'])
-    await core_.find_link()
+    core_.find_link()
     time.sleep(1)
-    await core_.find_photo_or_video()
+    core_.find_photo_or_video()
     if path.isinstance(str):
         path = pathlib.Path(path)
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        strn = []
-        for paths in path:
-            patha = str(pathlib.Path(paths).resolve())
-            strn.append(f'"{patha}"')
-
-        print(" ".join(strn))
-        pyperclip.copy(" ".join(strn))
+        str_n = " ".join([str(pathlib.Path(p).resolve()) for p in path])
+        print(" ".join(str_n))
+        pyperclip.copy(" ".join(str_n))
     time.sleep(1)
     keyboard.press("ctrl")
     keyboard.press("v")
@@ -297,10 +293,10 @@ def sendimg_or_video_immediately(
     keyboard.press("enter")
     keyboard.release("enter")
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_['close_time'])
+        core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def sendwhatsdoc_immediately(
+def send_whats_doc_immediately(
         phone_no: str,
         path: str,
         message: str = None,
@@ -324,7 +320,7 @@ None.
         'close_time': kwargs.get('close_time', 3)
     }
 
-    if not await core_.check_number(number=phone_no):
+    if not core_.check_number(number=phone_no):
         raise exceptions.CountryCodeException("Country Code Missing in Phone Number!")
 
     phone_no = phone_no.replace(" ", "")
@@ -333,21 +329,17 @@ None.
 
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}")
     time.sleep(waiting_['wait_time'])
-    await core_.find_link()
+    core_.find_link()
     time.sleep(1)
-    await core_.find_document()
-    if path.isinstance(str):
+    core_.find_document()
+    if isinstance(path, str):
         path = pathlib.Path(path)
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        strn = []
-        for paths in path:
-            patha = str(pathlib.Path(paths).resolve())
-            strn.append(f'"{patha}"')
-
-        print(" ".join(strn))
-        pyperclip.copy(" ".join(strn))
+        str_n = " ".join([str(pathlib.Path(p).resolve()) for p in path])
+        print(str_n)
+        pyperclip.copy(str_n)
 
     time.sleep(1)
     keyboard.press("ctrl")
@@ -363,7 +355,7 @@ None.
     keyboard.press("enter")
     keyboard.release("enter")
     if waiting_['tab_close']:
-        await core_.close_tab(wait_time=waiting_['close_time'])
+        core_.close_tab(wait_time=waiting_['close_time'])
 
 
 def open_web() -> bool:
@@ -376,4 +368,3 @@ def open_web() -> bool:
     return True
 
 
-asyncio.run(sendwhatmsg("+919398993400", 'hello'))

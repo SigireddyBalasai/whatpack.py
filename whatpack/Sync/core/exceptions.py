@@ -15,7 +15,7 @@ class CallTimeException(Exception):
 
 class ImageNotFoundException(Exception):
     """
-    No image was finded while searching with template matching algorithm
+    No image was found while searching with template matching algorithm
     """
 
 
@@ -42,4 +42,4 @@ class UnableToAccessApi(Exception):
 
 
 class CannotFindTheSolution(Exception):
-    """We are unable to help sorry for it, we are apolizing you"""
+    """We are unable to help sorry for it"""

@@ -14,7 +14,7 @@ import pyautogui as pg
 from .core import core_, exceptions
 
 
-async def sendwhatmsg_instantly(
+async def send_what_msg_instantly(
         phone_no: str,
         message: str,
         **kwargs
@@ -57,7 +57,7 @@ async def sendwhatmsg_instantly(
         await core_.close_tab(wait_time=waiting_['close_time'])
 
 
-async def sendwhatmsg(
+async def send_what_msg(
         phone_no: typing.Union[str, None] = None,
         message: typing.Union[str, None] = None,
         **kwargs
@@ -112,12 +112,12 @@ async def sendwhatmsg(
         {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
     await asyncio.sleep(sleep_time)
-    await sendwhatmsg_instantly(phone_no,message,**kwargs)
+    await send_what_msg_instantly(phone_no, message, **kwargs)
     if waiting_['tab_close']:
         await core_.close_tab(wait_time=waiting_['close_time'])
 
 
-async def sendwhatmsg_to_group(
+async def send_what_msg_to_group(
         group_id: str,
         message: str,
         **kwargs
@@ -168,12 +168,12 @@ async def sendwhatmsg_to_group(
             and after {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
     await asyncio.sleep(sleep_time)
-    await sendwhatmsg_instantly(group_id, message)
+    await send_what_msg_instantly(group_id, message)
     if waiting_['tab_close']:
         await core_.close_tab(wait_time=waiting_["close_time"])
 
 
-async def sendwhatmsg_to_group_instantly(
+async def send_what_msg_to_group_instantly(
         group_id: str,
         message: str,
         **kwargs
@@ -199,13 +199,13 @@ async def sendwhatmsg_to_group_instantly(
         'close_time': kwargs.get('close_time', 3)
     }
     await asyncio.sleep(4)
-    await sendwhatmsg_instantly(group_id, message, **kwargs)
+    await send_what_msg_instantly(group_id, message, **kwargs)
 
     if waiting_['tab_close']:
         await core_.close_tab(wait_time=waiting_['close_time'])
 
 
-async def sendwhatsmsg_to_all(
+async def send_whats_msg_to_all(
         phone_nos: List[str],
         message: str,
         **kwargs
@@ -229,12 +229,12 @@ async def sendwhatsmsg_to_all(
     """
 
     for phone_n in phone_nos:
-        await sendwhatmsg(
+        await send_what_msg(
             phone_n, message, **kwargs
         )
 
 
-async def sendimg_or_video_immediately(
+async def send_img_or_video_immediately(
         phone_no: str,
         path: str,
         message: str = None,
@@ -271,18 +271,14 @@ async def sendimg_or_video_immediately(
     await core_.find_link()
     time.sleep(1)
     await core_.find_photo_or_video()
-    if path.isinstance(str):
+    if isinstance(path, str):
         path = pathlib.Path(path)
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        strn = []
-        for paths in path:
-            patha = str(pathlib.Path(paths).resolve())
-            strn.append(f'"{patha}"')
-
-        print(" ".join(strn))
-        pyperclip.copy(" ".join(strn))
+        str_n = " ".join(list(map(lambda x: str(pathlib.Path(x).resolve()), path)))
+        print(str_n)
+        pyperclip.copy(str_n)
     time.sleep(1)
     keyboard.press("ctrl")
     keyboard.press("v")
@@ -300,7 +296,7 @@ async def sendimg_or_video_immediately(
         await core_.close_tab(wait_time=waiting_['close_time'])
 
 
-async def sendwhatsdoc_immediately(
+async def send_whats_doc_immediately(
         phone_no: str,
         path: str,
         message: str = None,
@@ -336,18 +332,13 @@ None.
     await core_.find_link()
     time.sleep(1)
     await core_.find_document()
-    if path.isinstance(str):
+    if isinstance(path, str):
         path = pathlib.Path(path)
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        strn = []
-        for paths in path:
-            patha = str(pathlib.Path(paths).resolve())
-            strn.append(f'"{patha}"')
-
-        print(" ".join(strn))
-        pyperclip.copy(" ".join(strn))
+        str_n = " ".join(list(map(lambda x: str(pathlib.Path(x).resolve()), path)))
+        print(str_n)
 
     time.sleep(1)
     keyboard.press("ctrl")
@@ -376,4 +367,4 @@ def open_web() -> bool:
     return True
 
 
-asyncio.run(sendwhatmsg("+919398993400", 'hello'))
+asyncio.run(send_what_msg("+919398993400", 'hello'))
