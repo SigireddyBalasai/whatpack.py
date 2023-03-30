@@ -11,7 +11,7 @@ from urllib.parse import quote
 import pyperclip
 import keyboard
 import pyautogui as pg
-from .core import core_, exceptions
+from core import core_, exceptions
 
 
 def send_what_msg_instantly(

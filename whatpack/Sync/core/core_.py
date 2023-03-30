@@ -3,12 +3,12 @@ import os
 import collections
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from platform import system
+from typing import NamedTuple
 from urllib.parse import quote
 from webbrowser import open
-
-import aiohttp
-from aiohttp import ClientConnectorError
-from pyautogui import click, hotkey, moveTo, press, size, typewrite,ImageNotFoundException
+import requests
+from requests import ConnectionError
+from pyautogui import click, hotkey, moveTo, press, size, typewrite, ImageNotFoundException
 from pyscreeze import Box, screenshot
 import cv2
 import numpy as np
@@ -69,8 +69,8 @@ def find_link():
     dir_path = os.path.dirname(os.path.realpath(__file__))
     print(f"{dir_path}\\data\\link.png")
     link_paths = ["link.png", "link2.png"]
-    locations = [locate_on_screen(f"{dir_path}\\data\\{loc}", grayscale=True, confidence=0.9, multiscale=True) for loc in
-                 link_paths]
+    locations = [locate_on_screen(f"{dir_path}\\data\\{loc}", grayscale=True, confidence=0.9, multiscale=True)
+                 for loc in link_paths]
     location = None
     y = 0
     for position_link in locations:
@@ -93,7 +93,9 @@ def find_document():
 
 def find_photo_or_video():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\photo_or_video.png", confidence=0.8, multiscale=True, grayscale=True)
+    location = locate_on_screen(f"{dir_path}\\data\\photo_or_video.png", confidence=0.8,
+                                multiscale=True,
+                                grayscale=True)
     print(location)
     moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
     click()
@@ -103,13 +105,8 @@ def check_connection() -> None:
     """Check the Internet connection of the Host Machine"""
 
     try:
-        with aiohttp.ClientSession() as session:
-            with session.get("https://google.com") as response:
-                status = response.status
-                if status < 400:
-                    pass
-
-    except ClientConnectorError:
+        requests.get("www.google.com")
+    except ConnectionError:
         raise InternetException(
             "Error while connecting to the Internet. Make sure you are connected to the Internet!"
         )
@@ -185,7 +182,7 @@ def locate_max_opencv(template: str,
                       screen_image: str,
                       grayscale: bool = False,
                       confidence=0.9,
-                      multiscale=False) -> Box:
+                      multiscale=False) -> Box | Box | None:
     """Locate button using cv2.TemplateMatching algorithm
 
         Parameters
