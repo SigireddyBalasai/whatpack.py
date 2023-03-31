@@ -271,7 +271,7 @@ def send_img_or_video_immediately(
     core_.find_link()
     time.sleep(1)
     core_.find_photo_or_video()
-    if path.isinstance(str):
+    if isinstance(path, str):
         path = pathlib.Path(path)
         pyperclip.copy(str(path.resolve()))
         print("Copied")
@@ -366,5 +366,3 @@ def open_web() -> bool:
     except web.Error:
         return False
     return True
-
-
