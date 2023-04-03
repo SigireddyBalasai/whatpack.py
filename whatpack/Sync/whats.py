@@ -1,7 +1,6 @@
-"""This is the main whatsapp module for the version of the package"""
+"""This is the main whatsapp module for the sync version of the package"""
 import typing
 import time
-import asyncio
 import pathlib
 import webbrowser as web
 from datetime import datetime
@@ -9,9 +8,8 @@ from re import fullmatch
 from typing import List
 from urllib.parse import quote
 import pyperclip
-import keyboard
 import pyautogui as pg
-from core import core_, exceptions
+from .core import core_, exceptions
 
 
 def send_what_msg_instantly(
@@ -20,18 +18,18 @@ def send_what_msg_instantly(
         **kwargs
 ) -> None:
     """Send a WhatsApp message instantly.
-
+    
     This function opens a new tab in the default web browser,
     navigates to the WhatsApp web page,
     and sends a message to the specified phone number.
-
+    
     Parameters:
     message: The message to be sent.
     phone_no: The phone number to send the message to.
     wait_time: The time to wait before sending the message (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the message.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
@@ -50,30 +48,30 @@ def send_what_msg_instantly(
         raise exceptions.InvalidPhoneNumber("Invalid Phone Number.")
     phone_no = phone_no.replace(" ", "")
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}&text={quote(message)}", new=0)
-    asyncio.sleep(waiting_['wait_time'])
+    time.sleep(waiting_['wait_time'])
     pg.press('enter')
-    asyncio.sleep(waiting_['close_time'])
+    time.sleep(waiting_['close_time'])
     if waiting_['tab_close']:
         core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def send_whats_msg(
+def send_what_msg(
         phone_no: typing.Union[str, None] = None,
         message: typing.Union[str, None] = None,
         **kwargs
 ) -> None:
     """Send a WhatsApp message at a certain time.
-
+    
     This function schedules the sending of a WhatsApp message
     to a specified phone number at a specified time.
-
+    
     Parameters:
     phone_no: The phone number to send the message to.
     message: The message to be sent.
     wait_time: The time to wait before sending the message (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the message.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
@@ -111,23 +109,23 @@ def send_whats_msg(
         f"In {waiting_['sleep_time']} Seconds WhatsApp will open and after\
         {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
-    asyncio.sleep(sleep_time)
+    time.sleep(sleep_time)
     send_what_msg_instantly(phone_no, message, **kwargs)
     if waiting_['tab_close']:
         core_.close_tab(wait_time=waiting_['close_time'])
 
 
-def send_whats_msg_to_group(
+def send_what_msg_to_group(
         group_id: str,
         message: str,
         **kwargs
 ) -> None:
     """Send a WhatsApp message to a group at a certain time.
-
+    
     This function schedules 
     the sending of a WhatsApp message to 
     a specified group at a specified time.
-
+    
     Parameters:
     group_id: The ID of the group to send the message to.
     message: The message to be sent.
@@ -136,7 +134,7 @@ def send_whats_msg_to_group(
     wait_time: The time to wait before sending the message (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the message.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
@@ -167,7 +165,7 @@ def send_whats_msg_to_group(
         f"In {sleep_time} Seconds WhatsApp will open\
             and after {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
-    asyncio.sleep(sleep_time)
+    time.sleep(sleep_time)
     send_what_msg_instantly(group_id, message)
     if waiting_['tab_close']:
         core_.close_tab(wait_time=waiting_["close_time"])
@@ -179,17 +177,17 @@ def send_what_msg_to_group_instantly(
         **kwargs
 ) -> None:
     """Send a WhatsApp message to a group instantly.
-
+    
     This function opens the WhatsApp Web page
     in a new tab and sends a message to the specified group.
-
+    
     Parameters:
     group_id: The ID of the group to send the message to.
     message: The message to be sent.
     wait_time: The time to wait before sending the message (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the message.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
@@ -198,7 +196,7 @@ def send_what_msg_to_group_instantly(
         'tab_close': kwargs.get('tab_close', False),
         'close_time': kwargs.get('close_time', 3)
     }
-    asyncio.sleep(4)
+    time.sleep(4)
     send_what_msg_instantly(group_id, message, **kwargs)
 
     if waiting_['tab_close']:
@@ -214,7 +212,7 @@ def send_whats_msg_to_all(
     at a certain time.
     This function schedules the sending of a WhatsApp message
     to a list of specified phone numbers at a specified time.
-
+    
     Parameters:
     phone_nos: The list of phone numbers to send the message to.
     message: The message to be sent.
@@ -223,13 +221,13 @@ def send_whats_msg_to_all(
     wait_time: The time to wait before sending the message (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the message.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
 
     for phone_n in phone_nos:
-        send_whats_msg(
+        send_what_msg(
             phone_n, message, **kwargs
         )
 
@@ -250,7 +248,7 @@ def send_img_or_video_immediately(
     wait_time: The time to wait before sending the file (in seconds).
     tab_close: A flag indicating whether to close the tab after sending the file.
     close_time: The time to wait before closing the tab (in seconds).
-
+    
     Returns:
     None.
     """
@@ -276,22 +274,20 @@ def send_img_or_video_immediately(
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        str_n = " ".join([str(pathlib.Path(p).resolve()) for p in path])
-        print(" ".join(str_n))
-        pyperclip.copy(" ".join(str_n))
+        str_n = " ".join(list(map(lambda x: str(pathlib.Path(x).resolve()), path)))
+        print(str_n)
+        pyperclip.copy(str_n)
     time.sleep(1)
-    keyboard.press("ctrl")
-    keyboard.press("v")
-    keyboard.release("v")
-    keyboard.release("ctrl")
+    pg.hotkey('ctrl', 'v')
     time.sleep(1)
-    keyboard.press("enter")
-    keyboard.release("enter")
+    pg.press('enter')
     time.sleep(1)
     if message is not None:
-        keyboard.write(message)
-    keyboard.press("enter")
-    keyboard.release("enter")
+        pyperclip.copy(message)
+        time.sleep(1)
+        pg.hotkey('ctrl', 'v')
+    time.sleep(1)
+    pg.press('enter')
     if waiting_['tab_close']:
         core_.close_tab(wait_time=waiting_['close_time'])
 
@@ -337,23 +333,19 @@ None.
         pyperclip.copy(str(path.resolve()))
         print("Copied")
     else:
-        str_n = " ".join([str(pathlib.Path(p).resolve()) for p in path])
+        str_n = " ".join(list(map(lambda x: str(pathlib.Path(x).resolve()), path)))
         print(str_n)
-        pyperclip.copy(str_n)
 
     time.sleep(1)
-    keyboard.press("ctrl")
-    keyboard.press("v")
-    keyboard.release("v")
-    keyboard.release("ctrl")
+    pg.hotkey('ctrl', 'v')
     time.sleep(1)
-    keyboard.press("enter")
-    keyboard.release("enter")
+    pg.press('enter')
     time.sleep(1)
     if message is not None:
-        keyboard.write(message)
-    keyboard.press("enter")
-    keyboard.release("enter")
+        pyperclip.copy(message)
+        time.sleep(1)
+        pg.hotkey('ctrl', 'v')
+    pg.press('enter')
     if waiting_['tab_close']:
         core_.close_tab(wait_time=waiting_['close_time'])
 

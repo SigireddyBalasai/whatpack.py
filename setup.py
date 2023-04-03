@@ -22,8 +22,8 @@ def reqs():
 
 setup(
     name="whatpack.py",
-    packages=['whatpack', 'whatpack.async', 'whatpack.async.core', 'whatpack.headless'],
-    version="2.2.5",
+    packages=['whatpack', 'whatpack.async', 'whatpack.sync', 'whatpack.headless'],
+    version="1.0.0.0",
     maintainer="SigireddyBalasai",
     maintainer_email="SigireddyBalasai@gmail.com",
     setup_requires=['setuptools_scm'],

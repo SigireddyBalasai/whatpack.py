@@ -9,7 +9,6 @@ from re import fullmatch
 from typing import List
 from urllib.parse import quote
 import pyperclip
-import keyboard
 import pyautogui as pg
 from .core import core_, exceptions
 
@@ -280,18 +279,16 @@ async def send_img_or_video_immediately(
         print(str_n)
         pyperclip.copy(str_n)
     time.sleep(1)
-    keyboard.press("ctrl")
-    keyboard.press("v")
-    keyboard.release("v")
-    keyboard.release("ctrl")
+    pg.hotkey('ctrl', 'v')
     time.sleep(1)
-    keyboard.press("enter")
-    keyboard.release("enter")
+    pg.press('enter')
     time.sleep(1)
     if message is not None:
-        keyboard.write(message)
-    keyboard.press("enter")
-    keyboard.release("enter")
+        pyperclip.copy(message)
+        time.sleep(1)
+        pg.hotkey('ctrl', 'v')
+    time.sleep(1)
+    pg.press('enter')
     if waiting_['tab_close']:
         await core_.close_tab(wait_time=waiting_['close_time'])
 
@@ -341,18 +338,15 @@ None.
         print(str_n)
 
     time.sleep(1)
-    keyboard.press("ctrl")
-    keyboard.press("v")
-    keyboard.release("v")
-    keyboard.release("ctrl")
+    pg.hotkey('ctrl', 'v')
     time.sleep(1)
-    keyboard.press("enter")
-    keyboard.release("enter")
+    pg.press('enter')
     time.sleep(1)
     if message is not None:
-        keyboard.write(message)
-    keyboard.press("enter")
-    keyboard.release("enter")
+        pyperclip.copy(message)
+        time.sleep(1)
+        pg.hotkey('ctrl', 'v')
+    pg.press('enter')
     if waiting_['tab_close']:
         await core_.close_tab(wait_time=waiting_['close_time'])
 
@@ -365,6 +359,3 @@ def open_web() -> bool:
     except web.Error:
         return False
     return True
-
-
-asyncio.run(send_what_msg("+919398993400", 'hello'))
