@@ -8,11 +8,22 @@ whatpack.py is a Python package that allows you to automate WhatsApp and YouTube
 
 
 
-[![Apache License](https://img.shields.io/github/license/SigireddyBalasai/WhatPack.py)](https://img.shields.io/github/license/SigireddyBalasai/WhatPack.py)
-[![Total Issues](https://img.shields.io/github/issues/SigireddyBalasai/WhatPack.py)](https://img.shields.io/github/issues/SigireddyBalasai/WhatPack.py)
+[![Apache License](https://badgen.net/github/license/SigireddyBalasai/whatpack.py)](https://github.com/SigireddyBalasai/whatpack.py/blob/main/LICENSE)
+[![Watchers](https://badgen.net/github/watchers/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/watchers)
+[![Stars](https://badgen.net/github/stars/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/WhatPack.py/stargazers)
+[![Forks](https://badgen.net/github/forks/SigireddyBalasai/whatPack.py)](http://github.com/SigireddyBalasai/whatpack.py/network/members)
+[![Tags](https://badgen.net/github/tags/SigireddyBalasai/whatPack.py)](http://github.com/SigireddyBalasai/whatpack.py/tags)
+[![Open Issues](https://badgen.net/github/open-issues/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/issues)
+[![Closed Issues](https://badgen.net/github/closed-issues/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/issues?q=is%3Aissue+is%3Aclosed)
+[![Open PRs](https://badgen.net/github/open-prs/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/pulls)
+[![Closed PRs](https://badgen.net/github/closed-prs/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/pulls?q=is%3Apr+is%3Aclosed)
+[![Merged PRs](https://badgen.net/github/merged-prs/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/pulls?q=is%3Apr+is%3Amerged)
+[![Contributors](https://badgen.net/github/contributors/SigireddyBalasai/whatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/graphs/contributors)
+[![Dependabot](https://badgen.net/github/dependabot/SigireddyBalasai/whatPack.py)](https://badgen.net/github/dependabot/SigireddyBalasai/whatPack.py)
+[![Code Triagers Badge](https://www.codetriage.com/sigireddybalasai/whatpack.py/badges/users.svg)](https://www.codetriage.com/sigireddybalasai/whatpack.py)
 [![Open Source Helpers](https://www.codetriage.com/sigireddybalasai/whatpack.py/badges/users.svg)](https://www.codetriage.com/sigireddybalasai/whatpack.py)
-[![Total Forks](https://img.shields.io/github/forks/SigireddyBalasai/WhatPack.py?style=social)](https://img.shields.io/github/forks/SigireddyBalasai/WhatPack.py?style=social)
-[![Total Stars](https://img.shields.io/github/stars/SigireddyBalasai/Whatpack.py?style=social)](https://img.shields.io/github/stars/SigireddyBalasai/Whatpack.py?style=social)
+[![Package Dependents](https://badgen.net/github/dependents-pkg/SigireddyBalasai/WhatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/network/dependents)
+[![Package Dependencies](https://badgen.net/github/dependents-pkg/SigireddyBalasai/WhatPack.py)](https://github.com/SigireddyBalasai/whatpack.py/network/dependents)
 
 
 ## Contributing
