@@ -34,3 +34,19 @@ See `contributing.md` for ways to get started.
 
 Please adhere to this project's `code of conduct`.
 
+
+## FAQ
+
+#### I am getting error what should i do
+
+Step 1:use command `pip install --upgrade whatpack.py`
+
+step 2:check examples in examples folder
+
+step 3:open an issue in github
+
+#### it is not working in linux
+
+check if all required dependencies are ready
+and open issues 
+

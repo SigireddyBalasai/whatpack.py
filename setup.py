@@ -37,7 +37,7 @@ setup(
     author="SigireddyBalasai",
     author_email="sigireddybalasai@gmail.com",
     url="https://github.com/SigireddyBalasai/whatpack.py",
-    download_url="https://github.com/SigireddyBalasai/whatpack.py/archive/refs/tags/1.0.tar.gz",
+    download_url="https://github.com/SigireddyBalasai/whatpack.py",
     keywords=["send_what_msg", "whatpack"],
     install_requires=reqs(),
     include_package_data=True,
