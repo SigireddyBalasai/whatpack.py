@@ -50,3 +50,8 @@ step 3:open an issue in github
 check if all required dependencies are ready
 and open issues 
 
+#### it is not working in windows
+
+check if all required dependencies are ready
+and open issues
+
