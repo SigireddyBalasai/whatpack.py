@@ -10,6 +10,7 @@ whatpack.py is a Python package that allows you to automate WhatsApp and YouTube
 
 [![Apache License](https://img.shields.io/github/license/SigireddyBalasai/WhatPack.py)](https://img.shields.io/github/license/SigireddyBalasai/WhatPack.py)
 [![Total Issues](https://img.shields.io/github/issues/SigireddyBalasai/WhatPack.py)](https://img.shields.io/github/issues/SigireddyBalasai/WhatPack.py)
+[![Open Source Helpers](https://www.codetriage.com/sigireddybalasai/whatpack.py/badges/users.svg)](https://www.codetriage.com/sigireddybalasai/whatpack.py)
 [![Total Forks](https://img.shields.io/github/forks/SigireddyBalasai/WhatPack.py?style=social)](https://img.shields.io/github/forks/SigireddyBalasai/WhatPack.py?style=social)
 [![Total Stars](https://img.shields.io/github/stars/SigireddyBalasai/Whatpack.py?style=social)](https://img.shields.io/github/stars/SigireddyBalasai/Whatpack.py?style=social)
 
