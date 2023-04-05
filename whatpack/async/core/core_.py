@@ -1,4 +1,6 @@
 import asyncio
+from typing import Union
+
 from aiohttp import ClientConnectorError
 import os
 import collections
@@ -42,7 +44,7 @@ async def close_tab(wait_time: int = 2) -> None:
 
 def find_recent_chat():
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\searchbar.png")
+    location = locate_on_screen("{dir_path}\\data\\searchbar.png")
     try:
         moveTo(location[0] + location[2] / 2, location[1] + location[3])
         click()
@@ -187,7 +189,7 @@ def locate_max_opencv(template: str,
                       screen_image: str,
                       grayscale: bool = False,
                       confidence=0.9,
-                      multiscale=False) -> Box | Box | None:
+                      multiscale=False) -> Union[Box, Box, None]:
     """Locate button using cv2.TemplateMatching algorithm
 
         Parameters

@@ -7,7 +7,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def readme_str() -> str:
     """This will return the readme file"""
-    with open(r"README.md", encoding='UFT-8') as file:
+    with open(r"README.md") as file:
         readme = file.read()
         return readme
 
@@ -23,7 +23,7 @@ def reqs():
 setup(
     name="whatpack.py",
     packages=['whatpack', 'whatpack.async', 'whatpack.sync', 'whatpack.headless'],
-    version="1.0.0.0",
+    version="0.0.1",
     maintainer="SigireddyBalasai",
     maintainer_email="SigireddyBalasai@gmail.com",
     setup_requires=['setuptools_scm'],

@@ -3,7 +3,7 @@ import os
 import collections
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from platform import system
-from typing import NamedTuple
+from typing import NamedTuple, Union
 from urllib.parse import quote
 from webbrowser import open
 import requests
@@ -182,7 +182,7 @@ def locate_max_opencv(template: str,
                       screen_image: str,
                       grayscale: bool = False,
                       confidence=0.9,
-                      multiscale=False) -> Box | Box | None:
+                      multiscale=False) -> Union[Box, Box, None]:
     """Locate button using cv2.TemplateMatching algorithm
 
         Parameters
