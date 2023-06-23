@@ -1,4 +1,4 @@
-"""This is the main whatsapp module for the sync version of the package"""
+"""This is the main whatsapp module for the synchronous version of the package"""
 import typing
 import time
 import pathlib

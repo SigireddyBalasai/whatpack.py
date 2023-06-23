@@ -1,4 +1,4 @@
-"""This is the main whatsapp module for the async version of the package"""
+"""This is the main whatsapp module for the asynchronous version of the package"""
 import typing
 import time
 import asyncio

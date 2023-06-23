@@ -213,7 +213,7 @@ def locate_max_opencv(template: str,
     confidence = float(confidence)
 
     template = load_image(template, grayscale)
-    templateH, templateW = template.shape[:2]
+    template_h, template_w = template.shape[:2]
     screen_image = load_image(screen_image, grayscale)
 
     if (screen_image.shape[0] < template.shape[0] or
@@ -236,7 +236,7 @@ def locate_max_opencv(template: str,
                     match_x = max_loc[0]
                     match_y = max_loc[1]
         if match_x is not None:
-            return Box(match_x, match_y, templateW, templateH, max_val)
+            return Box(match_x, match_y, template_w, template_h, max_val)
         else:
             raise ImageNotFoundException
 
@@ -249,7 +249,7 @@ def locate_max_opencv(template: str,
         match_x = max_loc[0]
         match_y = max_loc[1]
 
-        return Box(match_x, match_y, templateW, templateH, max_val)
+        return Box(match_x, match_y, template_w, template_h, max_val)
     return
 
 

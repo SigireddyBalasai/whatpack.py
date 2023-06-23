@@ -22,7 +22,7 @@ def reqs():
 
 setup(
     name="whatpack.py",
-    packages=['whatpack', 'whatpack.async', 'whatpack.sync', 'whatpack.headless'],
+    packages=['whatpack', 'whatpack.asynchronous', 'whatpack.synchronous', 'whatpack.headless'],
     version="0.0.1",
     maintainer="SigireddyBalasai",
     maintainer_email="SigireddyBalasai@gmail.com",
