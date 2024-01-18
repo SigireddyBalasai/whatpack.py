@@ -180,7 +180,6 @@ def locate_on_screen(image, **kwargs):
             a tuple of (x,y,w,h) of the best match
     """
     screenshot_im = screenshot(region=None)
-    Image.open(screenshot_im).save("screenshot.png")
     box_result = locate_max_opencv(image, screenshot_im, **kwargs)
     try:
         screenshot_im.fp.close()
