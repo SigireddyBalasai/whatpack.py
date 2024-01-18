@@ -12,6 +12,7 @@ from pyautogui import click, hotkey, moveTo, press, size, typewrite, ImageNotFou
 from pyscreeze import Box, screenshot
 import cv2
 import numpy as np
+import pathlib
 
 from .exceptions import InternetException
 
@@ -41,35 +42,35 @@ def close_tab(wait_time: int = 2) -> None:
 
 
 def find_recent_chat():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\searchbar.png")
+    dir_path = pathlib.Path(__file__).parent.absolute()
+    location = locate_on_screen(f"{dir_path}/data/searchbar.png")
     try:
         moveTo(location[0] + location[2] / 2, location[1] + location[3])
         click()
     except ImageNotFoundException:
-        location = locate_on_screen(f"{dir_path}\\data\\searchbar2.png")
+        location = locate_on_screen(f"{dir_path}/data/searchbar2.png")
         moveTo(location[0] + location[2] / 2, location[1] + location[3])
         click()
 
 
 def find_textbox() -> None:
     """click on text box"""
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\pywhatkit_smile1.png")
+    dir_path = pathlib.Path(__file__).parent.absolute()
+    location = locate_on_screen(f"{dir_path}/data/pywhatkit_smile1.png")
     try:
         moveTo(location[0] + 150, location[1] + 5)
         click()
     except ImageNotFoundException:
-        location = locate_on_screen(f"{dir_path}\\data\\pywhatkit_smile.png")
+        location = locate_on_screen(f"{dir_path}/data/pywhatkit_smile.png")
         moveTo(location[0] + 150, location[1] + 5)
         click()
 
 
 def find_link():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    print(f"{dir_path}\\data\\link.png")
+    dir_path = pathlib.Path(__file__).parent.absolute()
+    print(f"{dir_path}/data/link.png")
     link_paths = ["link.png", "link2.png"]
-    locations = [locate_on_screen(f"{dir_path}\\data\\{loc}", grayscale=True, confidence=0.9, multiscale=True)
+    locations = [locate_on_screen(f"{dir_path}/data/{loc}", grayscale=True, confidence=0.9, multiscale=True)
                  for loc in link_paths]
     location = None
     y = 0
@@ -83,8 +84,8 @@ def find_link():
 
 
 def find_document():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\document.png", confidence=0.8, multiscale=True, grayscale=True)
+    dir_path = pathlib.Path(__file__).parent.absolute()
+    location = locate_on_screen(f"{dir_path}/data/document.png", confidence=0.8, multiscale=True, grayscale=True)
     print(location)
 
     moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
@@ -92,8 +93,8 @@ def find_document():
 
 
 def find_photo_or_video():
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    location = locate_on_screen(f"{dir_path}\\data\\photo_or_video.png", confidence=0.8,
+    dir_path = pathlib.Path(__file__).parent.absolute()
+    location = locate_on_screen(f"{dir_path}/data/photo_or_video.png", confidence=0.8,
                                 multiscale=True,
                                 grayscale=True)
     print(location)

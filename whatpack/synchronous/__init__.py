@@ -21,3 +21,4 @@ for getting help
 """
 
 __all__ = ['core', 'whats']
+from .whats import send_img_or_video_immediately
