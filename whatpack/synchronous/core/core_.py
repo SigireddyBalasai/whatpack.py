@@ -1,4 +1,3 @@
-import asyncio
 import os
 import collections
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -13,6 +12,8 @@ from pyscreeze import Box, screenshot
 import cv2
 import numpy as np
 import pathlib
+import time
+from PIL import Image
 
 from .exceptions import InternetException
 
@@ -30,7 +31,7 @@ def check_number(number: str) -> bool:
 def close_tab(wait_time: int = 2) -> None:
     """Closes the Currently Opened Browser Tab"""
 
-    asyncio.sleep(wait_time)
+    time.sleep(wait_time)
     _system = system().lower()
     if _system in ("windows", "linux"):
         hotkey("ctrl", "w")
@@ -70,7 +71,7 @@ def find_link():
     dir_path = pathlib.Path(__file__).parent.absolute()
     print(f"{dir_path}/data/link.png")
     link_paths = ["link.png", "link2.png"]
-    locations = [locate_on_screen(f"{dir_path}/data/{loc}", grayscale=True, confidence=0.9, multiscale=True)
+    locations = [locate_on_screen(f"{dir_path}/data/{loc}", grayscale=True, confidence=0.1, multiscale=True)
                  for loc in link_paths]
     location = None
     y = 0
@@ -78,8 +79,11 @@ def find_link():
         if position_link is not None and position_link[1] > y:
             y = position_link[1]
             location = position_link
-    print(location)
-    moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
+    print(location[0], location[1], location[2], location[3],location)
+    loc1 = location[0] + location[2] / 2
+    loc2 = location[1] + location[3] / 2
+    print(loc1, loc2)
+    moveTo(loc1, loc2)
     click()
 
 
@@ -95,10 +99,17 @@ def find_document():
 def find_photo_or_video():
     dir_path = pathlib.Path(__file__).parent.absolute()
     location = locate_on_screen(f"{dir_path}/data/photo_or_video.png", confidence=0.8,
-                                multiscale=True,
+                                multiscale=False,
                                 grayscale=True)
-    print(location)
-    moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
+    try:
+        print(location)
+        moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
+    except:
+        location = locate_on_screen(f"{dir_path}/data/photo_or_video2.png", confidence=0.8,
+                                    multiscale=False,
+                                    grayscale=True)
+        print(location)
+        moveTo(location[0] + location[2] / 2, location[1] + location[3] / 2)
     click()
 
 
@@ -130,13 +141,9 @@ def send_message(message: str, receiver: str, wait_time: int) -> None:
     """Parses and Sends the Message"""
 
     _web(receiver=receiver, message=message)
-    asyncio.sleep(7)
+    time.sleep(7)
     click(WIDTH / 2, HEIGHT / 2 + 15)
-    asyncio.sleep(wait_time - 7)
-    _web(receiver=receiver, message=message)
-    asyncio.sleep(7)
-    click(WIDTH / 2, HEIGHT / 2)
-    asyncio.sleep(wait_time - 7)
+    time.sleep(wait_time-7)
     if not check_number(number=receiver):
         for char in message:
             if char == "\n":
@@ -146,6 +153,12 @@ def send_message(message: str, receiver: str, wait_time: int) -> None:
     find_textbox()
     press("enter")
 
+
+def load_image(img2load, gray: bool):
+    if type(img2load) is str:
+        assert os.path.exists(img2load)
+        return cv2.imread(img2load) if not gray else cv2.cvtColor(cv2.imread(img2load), cv2.COLOR_BGR2GRAY)
+    return np.array(img2load) if not gray else cv2.cvtColor(np.array(img2load), cv2.COLOR_BGR2GRAY)
 
 def locate_on_screen(image, **kwargs):
     """Locate button on screen using cv2.TemplateMatching algorithm
@@ -167,6 +180,7 @@ def locate_on_screen(image, **kwargs):
             a tuple of (x,y,w,h) of the best match
     """
     screenshot_im = screenshot(region=None)
+    Image.open(screenshot_im).save("screenshot.png")
     box_result = locate_max_opencv(image, screenshot_im, **kwargs)
     try:
         screenshot_im.fp.close()
@@ -179,11 +193,7 @@ def locate_on_screen(image, **kwargs):
     return box_result
 
 
-def locate_max_opencv(template: str,
-                      screen_image: str,
-                      grayscale: bool = False,
-                      confidence=0.9,
-                      multiscale=False) -> Union[Box, Box, None]:
+def locate_max_opencv(template: str, screen_image: str, grayscale: bool = False, confidence=0.9, multiscale=False) -> Union[Box, Box, None]:
     """Locate button using cv2.TemplateMatching algorithm
 
         Parameters
@@ -210,25 +220,19 @@ def locate_max_opencv(template: str,
     template_h, template_w = template.shape[:2]
     screen_image = load_image(screen_image, grayscale)
 
-    if (screen_image.shape[0] < template.shape[0] or
-            screen_image.shape[1] < template.shape[1]):
+    if (screen_image.shape[0] < template.shape[0] or screen_image.shape[1] < template.shape[1]):
         # avoid semi-cryptic OpenCV error below if bad size
         raise ValueError('needle dimension(s) exceed the haystack image or region dimensions')
 
     if multiscale:
         sizes = [1, 0.9, 0.85, 0.8]
         match_x, match_y = None, None
-        with ThreadPoolExecutor() as executor:
-            future_to_contour = {executor.submit(cv2.matchTemplate,
-                                                 screen_image.copy(),
-                                                 cv2.resize(template.copy(), (0, 0), fx=size, fy=size),
-                                                 cv2.TM_CCORR_NORMED): size_ for size_ in sizes}
-            for future in as_completed(future_to_contour):
-                _, max_val, _, max_loc = cv2.minMaxLoc(future.result())
-                if max_val >= confidence:
-                    confidence = max_val
-                    match_x = max_loc[0]
-                    match_y = max_loc[1]
+        for size in sizes:
+            _, max_val, _, max_loc = cv2.minMaxLoc(cv2.matchTemplate(screen_image.copy(), cv2.resize(template.copy(), (0, 0), fx=size, fy=size), cv2.TM_CCORR_NORMED))
+            if max_val >= confidence:
+                confidence = max_val
+                match_x = max_loc[0]
+                match_y = max_loc[1]
         if match_x is not None:
             return Box(match_x, match_y, template_w, template_h, max_val)
         else:
