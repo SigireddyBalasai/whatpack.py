@@ -1,3 +1,2 @@
-__all__ = ['synchronous','asynchronous','headless']
-from .synchronous.whats import send_img_or_video_immediately
+__all__ = ['synchronous','asynchronous','headless','synchronous.whats']
 from .synchronous.core.core_ import *
