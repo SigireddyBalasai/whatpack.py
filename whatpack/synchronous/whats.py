@@ -99,14 +99,14 @@ def send_what_msg(
         "%H:%M:%S",
     )
 
-    if left_time.seconds < time_['wait_time']:
+    if left_time.seconds < waiting_['wait_time']:
         raise exceptions.CallTimeException(
             "Call Time must be Greater than Wait Time as WhatsApp Web takes some Time to Load!"
         )
 
     sleep_time = left_time.seconds - waiting_['wait_time']
     print(
-        f"In {waiting_['sleep_time']} Seconds WhatsApp will open and after\
+        f"In {sleep_time} Seconds WhatsApp will open and after\
         {waiting_['wait_time']} Seconds Message will be Delivered!"
     )
     time.sleep(sleep_time)
