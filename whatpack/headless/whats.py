@@ -16,7 +16,8 @@ class WhatsApp:
 
     def __init__(self, headless: bool = True):
         chrome_options = webdriver.ChromeOptions()
-        chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+        chromebin = "GOOGLE_CHROME_BIN"
+        chrome_options.binary_location = os.environ.get(chromebin,default='C:\Program Files\Google\Chrome\Application\chrome.exe')
         if headless:
             chrome_options.add_argument("--headless")
         chrome_options.add_argument('--no-sandbox')
